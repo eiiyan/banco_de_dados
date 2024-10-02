@@ -188,10 +188,114 @@ select * from pizzas order by valor desc limit 2;
  -- valores distintos
  select distinct valor from pizzas order by valor;
  
+ select * from pizzas;
+ 
+ /* Funções de agregação
+ * Conhecidas como funções estatística, as funções de agregações obtêm:
+ * informação sobre conjuntos de linhas específicas
+ * AVG(coluna) Média dos valores da coluna
+ * COUNT Número de linhas
+ * MAX(coluna) Maior valor da coluna 
+ * MIN(coluna) Menor valor da coluna
+ * SUM(coluna) Soma dos valores da coluna
+ */
+ 
+ -- Exemplos Count
+ 
+select count(*) from pizzas;
+
+-- contar quantas pizzas estão cadastradas
+select count(nome) from pizzas;
+select count(valor) from pizzas;
+
+-- Exemplos AVG, MAX, MIN e SUM
+
+-- Média de preço das pizzas
+select avg(valor) as media from pizzas;
+select avg(valor) as media from pizzas where nome like "%esa";
+ 
+ -- Qual é o valor da pizza mais cara do cardápio da pizzaria?
+ select max(valor) as "maior valor" from pizzas;
+ 
+ -- Qual é o valor da pizza mais barata do cardápio da pizzaria?
+ select min(valor) as "menor valor" from pizzas;
+ 
+ -- Qual é o valor total do pedido número 7?
+ select sum(valor) as "valor total" from itens_pedido where pedido_id = 7;
+ 
+ select * from itens_pedido;
+ 
+ -- group by para agrupar pois só soma o valor de tal pedido 
+ select pedido_id as pedido, sum(valor) as "valor pedido" from itens_pedido group by pedido_id;
+ 
+ 
+ select pedido_id as pedido, sum(valor) as "valor pedido", 
+ sum(quantidade) as "quant pizzas",
+ avg(valor) as media,
+sum(valor) / sum(quantidade) as "valor médio"
+from itens_pedido
+group by pedido_id; 
+ 
+ select * from itens_pedido;
+ 
+ -- INNER JOIN: Retorna registros quando há pelo menos uam correspondência em amabas as tabelas
+ select * from clientes as c
+ inner join pedidos as p on p.cliente_id = c.id;
+ 
+ 
+ -- LEFT JOIN: Retorna todos os registros da tabela da esquerda
+ -- (primeira tabela mencionada) e os registros correspondentesda tabela dadireita
+ -- (segunda tabela mencionada) 
+select clientes.id as id_cliente, nome, telefone,pedidos.id as pedido, valor
+from clientes
+left join pedidos on pedidos.cliente_id = clientes.id;
+
+select clientes.id as id_cliente, nome, telefone,pedidos.id as pedido, valor
+from clientes
+right join pedidos on pedidos.cliente_id = clientes.id;
+
+insert into pedidos(id,data, valor) values (9, '2024-10-02', 0); 
+
+-- EXERCICIOS:
+
+-- Quantidade de pedido(s) realizado(s) por cliente,exibir nome do cliente e quantidade de pedidos
+select nome, telefone, count(pedidos.id) from clientes
+left join pedidos on clientes.id = pedidos.cliente_id
+group by nome, telefone;
+
+select * from pedidos;
+
+-- Quantos pedidos foram feitos no total?
+select count(id) as "total pedidos" from pedidos;
+
+-- Quantos pedidos foram feitos pelo cliente com o nome "Alexandre Santos"?
+select count(id) as "total pedidos" from pedidos where cliente_id = 1;
+
+-- Qual o valor total de todos os pedidos feitos até agora?
+select sum(valor) as "total" from pedidos;
+
+
  
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
  
  
  
