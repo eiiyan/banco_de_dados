@@ -275,6 +275,128 @@ select count(id) as "total pedidos" from pedidos where cliente_id = 1;
 select sum(valor) as "total" from pedidos;
 
 
+
+-- Exercicios 09/10/2024
+
+-- Questão 1
+select clientes.nome, pedidos.id as pedido from pedidos
+inner join clientes on pedidos.cliente_id = clientes.id;
+
+
+ -- Questão 2
+ select count(id) as total_pedidos from pedidos;
+ 
+ -- Questão 3
+ select pedidos.id as pedido, pedidos.data, clientes.nome from pedidos
+ inner join clientes on pedidos.cliente_id = clientes.id
+ where data > "2016-12-15";
+ 
+ -- Questão 4
+select nome,count(pedidos.id) as "total pedidos" from pedidos 
+left join clientes on clientes.id = pedidos.cliente_id
+where nome = "Alexandre Santos";
+
+-- Questão 5
+select nome, pedidos.id from clientes 
+inner join pedidos on clientes.id = pedidos.cliente_id
+group by nome, pedidos.id;
+
+-- Questão 6
+select sum(valor) as valor_total from pedidos;
+
+-- Questão 7
+select nome, sum(valor) as "valor total" from pedidos
+inner join clientes on clientes.id = pedidos.cliente_id
+ group by nome;
+
+-- Questão 8
+select clientes.nome, pedidos.id as pedido, pedidos.data, pedidos.valor from  clientes
+inner join pedidos on pedidos.cliente_id = clientes.id
+where pedidos.data between  '2016-12-01' and '2016-12-31 23:29:59';
+
+ -- Questão 9
+ select avg(valor) as valor_médio from pizzas;
+ 
+ -- Questão 10
+ select clientes.id, clientes.nome, sum(pedidos.valor) as valor_total,
+ count(pedidos.id) as total_pedidos from pedidos
+ left join clientes on clientes.id = pedidos.cliente_id
+ group by clientes.id, clientes.nome;
+ 
+ -- Questão 11
+ select max(valor) as "pedido mais caro" from pedidos;
+ 
+ -- Questão 12
+ select min(valor) as "pedido mais barato" from pedidos;
+ 
+ -- Questão 13
+ select nome, count(pedidos.id) as pedidos from clientes
+ inner join pedidos on pedidos.cliente_id = clientes.id
+group by nome;
+ 
+ -- Questão 14
+select nome, max(valor) as "pedido mais caro" from clientes
+inner join pedidos on pedidos.cliente_id = clientes.id
+order by valor desc limit 1;
+
+ -- Questão 15
+ select count(distinct pedido_id) as total_pedidos, avg(quantidade) as media_pizzas from itens_pedido;
+ 
+ -- Questão 16
+ select nome, sum(quantidade) as total_pizzas, count(pedidos.id) as total_pedido from itens_pedido 
+ inner join pedidos on itens_pedido.pedido_id = pedidos.id
+ inner join clientes on pedidos.cliente_id = clientes.id
+ where clientes.nome = "Bruna Dantas";
+ 
+ -- Questão 17
+ select nome, max(valor) as "pedido mais caro", min(valor) from pedidos 
+ inner join clientes on pedidos.cliente_id = clientes.id
+ where clientes.nome = "Laura Madureira";
+ 
+ -- Questão 18
+ select nome, count(quantidade) as total_pizzas from itens_pedido
+ inner join pedidos on itens_pedido.pedido_id = pedidos.id
+ inner join clientes on pedidos.cliente_id = clientes.id
+ group by nome;
+ 
+ -- Questão 19
+ select nome, min(valor) as "pedido mais barato" from clientes
+inner join pedidos on pedidos.cliente_id = clientes.id
+ order by valor desc limit 1;
+ 
+ -- Questão 20
+ select clientes.nome as cliente, pedidos.id as pedido from pedidos
+ left join clientes on clientes.id = pedidos.cliente_id 
+ group by nome;
+ 
+ -- Questão 21
+ select clientes.nome as cliente, valor as valor from pedidos
+ left join clientes on clientes.id = pedidos.cliente_id
+ group by nome;
+
+ -- Questão 22
+ select nome, sum(pedidos.valor) as "valor_total" from pedidos 
+ inner join clientes on clientes.id = pedidos.cliente_id 
+ group by nome order by valor_total desc limit 3;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
  
  
  
